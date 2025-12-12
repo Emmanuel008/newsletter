@@ -245,48 +245,6 @@ const NewSection = () => {
           </p>
         </div>
 
-        {/* Exhibitions & Events in 2025 */}
-        <div className="additional-section-item">
-          <h2 className="additional-section-headline">Exhibitions & Events in 2025</h2>
-          <p>
-            This year, DTBi has actively participated in national and international exhibitions, providing visibility to our projects and innovators. Key events include:
-          </p>
-          <ul className="new-section-list">
-            <li><strong>FinTech Exhibitions:</strong> Demonstrating DTBi's incubation programs and showcasing the progress of our incubatees.</li>
-            <li><strong>Innovation Week:</strong> Engaging with stakeholders, innovators, and partners to share lessons, explore collaboration, and display ongoing projects that are shaping Tanzania's innovation landscape.</li>
-          </ul>
-        </div>
-
-        {/* Preparatory Meeting for the Tanzania IPR Summit 2026 */}
-        <div className="additional-section-item">
-          <h2 className="additional-section-headline">Preparatory Meeting for the Tanzania IPR Summit 2026</h2>
-          <p>
-            DTBi took part in the planning and coordination of the upcoming Tanzania IPR Summit, a national platform expected to bring together key stakeholders in:
-          </p>
-          <ul className="new-section-list">
-            <li>Intellectual Property</li>
-            <li>Innovation</li>
-            <li>Research</li>
-            <li>Industry</li>
-            <li>Creative sectors</li>
-          </ul>
-          <p>
-            During November, the team successfully held a strategic meeting to discuss:
-          </p>
-          <ul className="new-section-list">
-            <li>Event structure</li>
-            <li>Partner involvement</li>
-            <li>Sponsorship acquisition</li>
-            <li>Proposed agenda and themes</li>
-          </ul>
-          <p>
-            DTBi is currently in the process of identifying and signing sponsors to support the summit.
-          </p>
-          <p>
-            The event aims to strengthen IP awareness, drive the commercialization of innovations, and enhance national competitiveness in the innovation ecosystem.
-          </p>
-        </div>
-
         {/* Looking Ahead */}
         <div className="additional-section-item">
           <h2 className="additional-section-headline">Looking Ahead</h2>
