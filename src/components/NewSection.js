@@ -165,11 +165,6 @@ const NewSection = () => {
       name: 'Sasa Tech',
       description: 'An ICT solutions provider developing software tools, mobile applications, and tech support systems tailored to business needs in various sectors.'
     },
-    {
-      id: 'high-global',
-      name: 'High Global',
-      description: 'A multifunctional startup focused on ICT, digital solutions, and capacity-building services aimed at empowering youth and SMEs with modern technology skills.'
-    }
   ];
 
   // Auto-scroll functionality
