@@ -5,6 +5,8 @@ import './css/NewSection.css';
 const NewSection = () => {
   const [expandedCard, setExpandedCard] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [startupIndex, setStartupIndex] = useState(0);
+  const [expandedStartup, setExpandedStartup] = useState(null);
 
   const cards = [
     {
@@ -122,6 +124,54 @@ const NewSection = () => {
     }
   ];
 
+  const startups = [
+    {
+      id: 'smart-darasa',
+      name: 'Smart Darasa',
+      description: 'A digital learning platform offering smart classroom solutions to improve access to quality education through interactive tools and e-learning systems.'
+    },
+    {
+      id: 'shule-yetu',
+      name: 'Shule Yetu',
+      description: 'An education management and monitoring system designed to digitize school operations, enhance transparency, and simplify communication between parents, teachers, and administrators.'
+    },
+    {
+      id: 'twende-technologies',
+      name: 'Twende Technologies',
+      description: 'A mobility and logistics-focused innovation offering smart transport solutions aimed at improving movement, safety, and operational efficiency across urban areas.'
+    },
+    {
+      id: 'fesam-company',
+      name: 'Fesam Company',
+      description: 'A technology-driven enterprise developing digital and automated systems to support businesses in improving service delivery and operational processes.'
+    },
+    {
+      id: 'magila-tech',
+      name: 'Magila Tech',
+      description: 'A hardware and IoT-focused startup building practical, locally relevant tech solutions for automation, agriculture, and environmental monitoring.'
+    },
+    {
+      id: 'scancode',
+      name: 'Scancode',
+      description: 'A digital platform using QR and barcode technology to improve product authentication, reduce counterfeits, and enhance supply-chain transparency.'
+    },
+    {
+      id: 'home-dreamz',
+      name: 'Home Dreamz',
+      description: 'A property and housing innovation platform offering digital tools for home management, property search, and real estate services.'
+    },
+    {
+      id: 'sasa-tech',
+      name: 'Sasa Tech',
+      description: 'An ICT solutions provider developing software tools, mobile applications, and tech support systems tailored to business needs in various sectors.'
+    },
+    {
+      id: 'high-global',
+      name: 'High Global',
+      description: 'A multifunctional startup focused on ICT, digital solutions, and capacity-building services aimed at empowering youth and SMEs with modern technology skills.'
+    }
+  ];
+
   // Auto-scroll functionality
   useEffect(() => {
     const interval = setInterval(() => {
@@ -134,6 +184,18 @@ const NewSection = () => {
 
     return () => clearInterval(interval);
   }, [cards.length]);
+
+  // Auto-scroll functionality for startups
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStartupIndex((prev) => {
+        const nextIndex = (prev + 1) % startups.length;
+        return nextIndex;
+      });
+    }, 2000); // Auto-scroll every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [startups.length]);
 
   const handleCardClick = (cardId) => {
     setExpandedCard(cardId);
@@ -154,6 +216,26 @@ const NewSection = () => {
   };
 
   const visibleCards = getVisibleCards();
+
+  // Get 3 startup cards to display (current, next, previous)
+  const getVisibleStartups = () => {
+    const visible = [];
+    for (let i = -1; i <= 1; i++) {
+      const index = (startupIndex + i + startups.length) % startups.length;
+      visible.push({ ...startups[index], displayIndex: index });
+    }
+    return visible;
+  };
+
+  const visibleStartups = getVisibleStartups();
+
+  const handleStartupClick = (startupId) => {
+    setExpandedStartup(startupId);
+  };
+
+  const closeStartupModal = () => {
+    setExpandedStartup(null);
+  };
 
   return (
     <div className="new-section-container">
@@ -245,6 +327,45 @@ const NewSection = () => {
           </p>
         </div>
 
+        {/* Businesses Incubated and Hosted at DTBi – 2025 */}
+        <div className="additional-section-item">
+          <h2 className="additional-section-headline">Businesses Incubated and Hosted at DTBi – 2025</h2>
+          <p>
+            In 2025, DTBi continued to strengthen Tanzania's innovation ecosystem by supporting startups and emerging businesses through incubation and hosting programs.
+            These enterprises represent diverse sectors including EdTech, IoT, Agritech, Software Development, and Digital Services—each contributing unique solutions to national development priorities.
+          </p>
+          <p>
+            Below are some of the startups incubated and hosted at DTBi during 2025:
+          </p>
+
+          {/* Startups Carousel */}
+          <div className="startups-carousel-container">
+            <div className="startups-cards-row">
+              {visibleStartups.map((startup, idx) => (
+                <div 
+                  key={startup.id}
+                  className={`startup-card-wrapper ${idx === 1 ? 'active' : ''}`}
+                >
+                  <div 
+                    className={`startup-card ${idx === 1 ? 'active' : ''}`}
+                    onClick={() => handleStartupClick(startup.id)}
+                  >
+                    <div className="startup-card-body">
+                      <h5 className="startup-card-title">
+                        {startup.name}
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p style={{ marginTop: '30px' }}>
+            Through incubation, mentorship, training, and technical guidance, DTBi continues to support these startups in strengthening their business models, improving product development, attracting partnerships, and preparing for market entry and scaling.
+          </p>
+        </div>
+
         {/* Looking Ahead */}
         <div className="additional-section-item">
           <h2 className="additional-section-headline">Looking Ahead</h2>
@@ -289,6 +410,31 @@ const NewSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Startup Modal Popup */}
+      {expandedStartup && (
+        <div className="modal-overlay" onClick={closeStartupModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeStartupModal} aria-label="Close modal">
+              ×
+            </button>
+            {(() => {
+              const selectedStartup = startups.find(startup => startup.id === expandedStartup);
+              if (!selectedStartup) return null;
+              return (
+                <>
+                  <div className="modal-body">
+                    <h2 className="modal-title">{selectedStartup.name}</h2>
+                    <div className="modal-description">
+                      <p>{selectedStartup.description}</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

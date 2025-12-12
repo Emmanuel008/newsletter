@@ -815,3 +815,244 @@
     width: 28px;
   }
 }
+
+/* Startups Carousel Styles */
+.startups-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  overflow: visible;
+  padding: 20px 0;
+}
+
+.startups-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  flex: 1;
+  max-width: 1400px;
+  perspective: 1000px;
+  align-items: stretch;
+}
+
+.startup-card-wrapper {
+  position: relative;
+  opacity: 0.6;
+  transform: scale(0.85);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.startup-card-wrapper.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+.startup-card-wrapper:hover {
+  transform: translateY(-8px) scale(0.9);
+}
+
+.startup-card-wrapper.active:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.startup-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.startup-card-wrapper.active .startup-card {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-color: #1e3a8a;
+}
+
+.startup-card-wrapper:hover .startup-card {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+.startup-card-wrapper.active:hover .startup-card {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+.startup-card-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  text-align: center;
+}
+
+.startup-card-title {
+  color: #1e3a8a;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.startup-card-wrapper.active .startup-card-title {
+  font-size: 24px;
+  color: #1e3a8a;
+}
+
+.startup-card-description {
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+  text-align: left;
+  flex: 1;
+}
+
+.startup-card-wrapper.active .startup-card-description {
+  font-size: 16px;
+}
+
+.carousel-button-left {
+  left: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.carousel-button-right {
+  right: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.startup-carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.startup-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #1e3a8a;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  position: relative;
+}
+
+.startup-indicator::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(30, 58, 138, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.startup-indicator:hover {
+  background: #1e3a8a;
+  transform: scale(1.3);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.startup-indicator:hover::before {
+  opacity: 1;
+}
+
+.startup-indicator.active {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  width: 36px;
+  border-radius: 8px;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 16px rgba(30, 58, 138, 0.4);
+}
+
+/* Responsive Design for Startups Carousel */
+@media (max-width: 1024px) {
+  .startups-carousel-container {
+    padding: 20px 0;
+  }
+
+  .startups-cards-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .startups-carousel-container {
+    margin: 30px 0;
+    padding: 15px 0;
+  }
+
+  .startups-cards-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .startup-card {
+    opacity: 1;
+    transform: scale(1);
+    min-height: 150px;
+  }
+
+  .startup-card-wrapper.active .startup-card {
+    transform: scale(1);
+  }
+
+  .startup-carousel-indicators {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .startup-indicator {
+    width: 12px;
+    height: 12px;
+  }
+
+  .startup-indicator.active {
+    width: 28px;
+  }
+
+  .startup-card-title {
+    font-size: 18px;
+  }
+
+  .startup-card-wrapper.active .startup-card-title {
+    font-size: 20px;
+  }
+
+  .startup-card-description {
+    font-size: 14px;
+  }
+
+  .startup-card-wrapper.active .startup-card-description {
+    font-size: 15px;
+  }
+}
