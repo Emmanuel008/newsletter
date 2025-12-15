@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { HiMail, HiGlobe } from 'react-icons/hi';
 import './css/NewSection.css';
 
 const NewSection = () => {
-  const [expandedCard, setExpandedCard] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [startupIndex, setStartupIndex] = useState(0);
-  const [expandedStartup, setExpandedStartup] = useState(null);
 
   const cards = [
     {
@@ -167,135 +163,42 @@ const NewSection = () => {
     },
   ];
 
-  // Auto-scroll functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        const nextIndex = (prev + 1) % cards.length;
-        return nextIndex;
-      });
-      setExpandedCard(null);
-    }, 5000); // Auto-scroll every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [cards.length]);
-
-  // Auto-scroll functionality for startups
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStartupIndex((prev) => {
-        const nextIndex = (prev + 1) % startups.length;
-        return nextIndex;
-      });
-    }, 2000); // Auto-scroll every 2 seconds
-
-    return () => clearInterval(interval);
-  }, [startups.length]);
-
-  const handleCardClick = (cardId) => {
-    setExpandedCard(cardId);
-  };
-
-  const closeModal = () => {
-    setExpandedCard(null);
-  };
-
-  // Get 3 cards to display (current, next, previous)
-  const getVisibleCards = () => {
-    const visible = [];
-    for (let i = -1; i <= 1; i++) {
-      const index = (currentIndex + i + cards.length) % cards.length;
-      visible.push({ ...cards[index], displayIndex: index });
-    }
-    return visible;
-  };
-
-  const visibleCards = getVisibleCards();
-
-  // Get 3 startup cards to display (current, next, previous)
-  const getVisibleStartups = () => {
-    const visible = [];
-    for (let i = -1; i <= 1; i++) {
-      const index = (startupIndex + i + startups.length) % startups.length;
-      visible.push({ ...startups[index], displayIndex: index });
-    }
-    return visible;
-  };
-
-  const visibleStartups = getVisibleStartups();
-
-  const handleStartupClick = (startupId) => {
-    setExpandedStartup(startupId);
-  };
-
-  const closeStartupModal = () => {
-    setExpandedStartup(null);
-  };
 
   return (
     <div className="new-section-container">
-      <div className="carousel-container">
-        <div className="cards-row">
-          {visibleCards.map((card, idx) => (
-            <div 
-              key={card.id}
-              className={`card-wrapper ${idx === 1 ? 'active' : ''}`}
-            >
-              <div
-                className={`custom-card ${idx === 1 ? 'active' : ''}`}
-                onClick={() => handleCardClick(card.id)}
+      <div className="cards-grid-container">
+        <div className="cards-grid">
+          {cards.map((card, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <div 
+                key={card.id}
+                className={`card-wrapper ${isEven ? 'image-left' : 'image-right'}`}
               >
-                {card.image && (
-                  <img 
-                    src={card.image} 
-                    alt={card.title}
-                    className="custom-card-image"
-                  />
-                )}
-                <div className="custom-card-body">
-                  <h5 className="custom-card-title">
-                    {card.title}
-                  </h5>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal Popup */}
-      {expandedCard && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal} aria-label="Close modal">
-              ×
-            </button>
-            {(() => {
-              const selectedCard = cards.find(card => card.id === expandedCard);
-              if (!selectedCard) return null;
-              return (
-                <>
-                  {selectedCard.image && (
-                    <div className="modal-image-container">
+                <div className="custom-card">
+                  {card.image && (
+                    <div className="custom-card-image-wrapper">
                       <img 
-                        src={selectedCard.image} 
-                        alt={selectedCard.title}
-                        className="modal-image"
+                        src={card.image} 
+                        alt={card.title}
+                        className="custom-card-image"
                       />
                     </div>
                   )}
-                  <div className="modal-body">
-                    <h2 className="modal-title">{selectedCard.title}</h2>
-                    <div className="modal-description">
-                      {selectedCard.content}
+                  <div className="custom-card-body">
+                    <h5 className="custom-card-title">
+                      {card.title}
+                    </h5>
+                    <div className="custom-card-content">
+                      {card.content}
                     </div>
                   </div>
-                </>
-              );
-            })()}
-          </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
 
       {/* Additional Sections */}
       <div className="additional-sections">
@@ -333,26 +236,36 @@ const NewSection = () => {
             Below are some of the startups incubated and hosted at DTBi during 2025:
           </p>
 
-          {/* Startups Carousel */}
-          <div className="startups-carousel-container">
-            <div className="startups-cards-row">
-              {visibleStartups.map((startup, idx) => (
-                <div 
-                  key={startup.id}
-                  className={`startup-card-wrapper ${idx === 1 ? 'active' : ''}`}
-                >
+          {/* Startups Grid */}
+          <div className="startups-grid-container">
+            <div className="startups-grid">
+              {startups.map((startup, index) => {
+                const isEven = index % 2 === 0;
+                return (
                   <div 
-                    className={`startup-card ${idx === 1 ? 'active' : ''}`}
-                    onClick={() => handleStartupClick(startup.id)}
+                    key={startup.id}
+                    className={`startup-card-wrapper ${isEven ? 'image-left' : 'image-right'}`}
                   >
-                    <div className="startup-card-body">
-                      <h5 className="startup-card-title">
-                        {startup.name}
-                      </h5>
+                    <div className="startup-card">
+                      <div className="startup-card-image-wrapper">
+                        <div className="startup-card-placeholder">
+                          <h3 className="startup-card-placeholder-title">
+                            {startup.name}
+                          </h3>
+                        </div>
+                      </div>
+                      <div className="startup-card-body">
+                        <h5 className="startup-card-title">
+                          {startup.name}
+                        </h5>
+                        <p className="startup-card-description">
+                          {startup.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -405,31 +318,6 @@ const NewSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Startup Modal Popup */}
-      {expandedStartup && (
-        <div className="modal-overlay" onClick={closeStartupModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeStartupModal} aria-label="Close modal">
-              ×
-            </button>
-            {(() => {
-              const selectedStartup = startups.find(startup => startup.id === expandedStartup);
-              if (!selectedStartup) return null;
-              return (
-                <>
-                  <div className="modal-body">
-                    <h2 className="modal-title">{selectedStartup.name}</h2>
-                    <div className="modal-description">
-                      <p>{selectedStartup.description}</p>
-                    </div>
-                  </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
